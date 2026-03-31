@@ -125,7 +125,7 @@ This separation is what gives both ISP and DIP meaningful enforcement across the
 ## 6.1 S: Single Responsibility Principle (SRP)
 
 ### Problem pattern
-A single god-file (`game.c`) and an oversized struct (`Game`) packed input handling, turn switching, scratch detection, win checking, ball setup, and status messages all into one place. Any edit to one concern risked silently breaking another.
+A single overloaded-file (`game.c`) and an oversized struct (`Game`) packed input handling, turn switching, scratch detection, win checking, ball setup, and status messages all into one place. Any edit to one concern risked silently breaking another.
 
 ### Implementation
 1. Distribute responsibilities across focused, single-purpose classes:
