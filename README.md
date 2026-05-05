@@ -45,7 +45,7 @@ This section records the AI prompts used to transform the 8-Ball Pool game from 
 
 ### Prompt 1.1 — Initial Codebase Audit
 
-> "Analyze this C raylib 8-ball pool game. The entire game is written in a single file: main.c. Read it fully and for each section, list all functions, global structs, enums, macros, and `#define` constants. Identify naming conventions used, responsibilities bundled into single functions, SOLID principle violations, and architectural weaknesses. Provide a full summary of what this codebase does and how it is currently organized."
+> "Analyze this  raylib 8-ball pool game. Read it fully and for each section, list all functions, global structs, enums, macros, and `#define` constants. Identify naming conventions used, responsibilities bundled into single functions, SOLID principle violations, and architectural weaknesses. Provide a full summary of what this codebase does and how it is currently organized."
 
 **Purpose:** To fully understand the ver1 codebase before touching anything. Every function, every constant, every struct needed to be inventoried before a refactoring plan could be made.
 
@@ -70,7 +70,7 @@ This section records the AI prompts used to transform the 8-Ball Pool game from 
 
 ### Prompt 2.1 — Naming Convention Redesign
 
-> "Create a naming convention upgrade plan for a C raylib pool game. The ver1 code uses heavy abbreviations (BL_CUE, GM_PLAY, pktd, vel, BlType, HndlInput, ChkCollisions). Design a new convention that covers: (1) struct field names — full descriptive words, (2) enum values — MODULE_DESCRIPTOR format, (3) function names — VerbNoun PascalCase, (4) constants — UPPER_SNAKE_CASE in config.h, (5) type names — PascalCase without abbreviation. Show a before/after table using the actual names from this codebase."
+> "Create a naming convention upgrade plan for a raylib pool game. The ver1 code uses heavy abbreviations (BL_CUE, GM_PLAY, pktd, vel, BlType, HndlInput, ChkCollisions). Design a new convention that covers: (1) struct field names — full descriptive words, (2) enum values — MODULE_DESCRIPTOR format, (3) function names — VerbNoun PascalCase, (4) constants — UPPER_SNAKE_CASE in config.h, (5) type names — PascalCase without abbreviation. Show a before/after table using the actual names from this codebase."
 
 **Purpose:** To define and document the naming convention improvements applied in ver2, replacing all abbreviated names with readable, descriptive equivalents.
 
@@ -87,7 +87,7 @@ This section records the AI prompts used to transform the 8-Ball Pool game from 
 
 ### Prompt 2.2 — Config Header Design
 
-> "Take all the `#define` constants from this C pool game's main.c (T_W, T_H, BL_R, PKT_R, RIL_W, FRIC, MIN_VEL, MAX_PWR_PX, MAX_SHT_SPD, MAX_BL_SPD, STICK_LENGTH) and reorganize them into a well-structured config.h file. Group them by category: window settings, table dimensions, ball physics, shot power, and stick behavior. Rename them to be fully descriptive using UPPER_SNAKE_CASE. Add a brief comment explaining the purpose of each constant."
+> "Take all the `#define` constants from this  pool game's main (T_W, T_H, BL_R, PKT_R, RIL_W, FRIC, MIN_VEL, MAX_PWR_PX, MAX_SHT_SPD, MAX_BL_SPD, STICK_LENGTH) and reorganize them into a well-structured config.h file. Group them by category: window settings, table dimensions, ball physics, shot power, and stick behavior. Rename them to be fully descriptive using UPPER_SNAKE_CASE. Add a brief comment explaining the purpose of each constant."
 
 **Purpose:** To centralize all magic numbers into a single, well-documented configuration header, making tuning and modification easy without touching game logic code.
 
@@ -97,14 +97,14 @@ This section records the AI prompts used to transform the 8-Ball Pool game from 
 
 ### Prompt 3.1 — Header Architecture & common.h Design
 
-> "For a refactored C raylib pool game split into game.c, graphics.c, physics.c, and utils.c, design a header architecture that avoids circular includes. Specifically: (1) What shared types (Ball, Game, Player, BallType, GameState) belong in a common.h? (2) How should config.h relate to common.h? (3) What should each module header (game.h, graphics.h, physics.h, utils.h) expose vs. keep private? (4) Should pocket position logic be in a shared inline function — and if so, where does it live?"
+> "For a refactored  raylib pool game split into game.c, graphics.c, physics.c, and utils.c, design a header architecture that avoids circular includes. Specifically: (1) What shared types (Ball, Game, Player, BallType, GameState) belong in a common.h? (2) How should config.h relate to common.h? (3) What should each module header (game.h, graphics.h, physics.h, utils.h) expose vs. keep private? (4) Should pocket position logic be in a shared inline function — and if so, where does it live?"
 
 **Purpose:** To design the header dependency tree cleanly before writing any headers, preventing the circular include problems that commonly occur when splitting a monolithic C file.
 
 **Decisions made:**
 - `config.h` defines only constants, no types, included by `common.h`
 - `common.h` defines all shared types (`Ball`, `Player`, `Game`, enums) and the `GetPocketPositions()` inline helper — included by all modules
-- Each module header only exposes its public API; internal helpers remain in `.c` files
+- Each module header only exposes its public API; internal helpers remain in  files
 - `GetPocketPositions()` was made `static inline` in `common.h` to avoid duplication between `graphics.c` and `game.c` both needing pocket coordinates
 
 ### Prompt 3.2 — Build System Upgrade
